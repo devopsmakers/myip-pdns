@@ -66,7 +66,7 @@ log() {
 # myip.exposed domain helpers
 #
 MYIP_DOMAIN_PATTERN="(^|\.)${MYIP_DOMAIN//./\.}\$"
-NS_SUBDOMAIN_PATTERN="^ns([0-9]+)\$"
+NS_SUBDOMAIN_PATTERN="^ns-([0-9]+)\$"
 IP_SUBDOMAIN_PATTERN="(^|\.)(((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))\$"
 BASE36_SUBDOMAIN_PATTERN="(^|\.)([a-z0-9]{1,7})\$"
 
@@ -123,7 +123,7 @@ answer_ns_query() {
   local i=1
   local ns_address
   for ns_address in "${MYIP_NS_ADDRESSES[@]}"; do
-    send_answer "NS" "ns$i.$MYIP_DOMAIN"
+    send_answer "NS" "ns-$i.$MYIP_DOMAIN"
     let i+=1
   done
 }
