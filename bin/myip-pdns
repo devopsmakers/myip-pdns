@@ -83,7 +83,7 @@ qname_is_root_domain() {
 }
 
 extract_subdomain_from_qname() {
-  SUBDOMAIN="${QNAME:0:${#QNAME}-${#MYIP_DOMAIN}}"
+  SUBDOMAIN="${QNAME:0:${#QNAME}${#MYIP_DOMAIN}}"
   SUBDOMAIN="${SUBDOMAIN%.}"
 }
 
@@ -152,7 +152,7 @@ answer_txt_query() {
 #
 trap fail err
 read_helo
-send_cmd "OK" "myip.exposed PowerDNS pipe backend (protocol version 1)"
+send_cmd "OK" "$MYIP_DOMAIN PowerDNS pipe backend (protocol version 1)"
 
 while read_query; do
   log "Query: type=$TYPE qname=$QNAME qclass=$QCLASS qtype=$QTYPE id=$ID ip=$IP"
