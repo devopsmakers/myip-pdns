@@ -83,7 +83,7 @@ qname_is_root_domain() {
 }
 
 extract_subdomain_from_qname() {
-  SUBDOMAIN="${QNAME:0:${#QNAME}${#MYIP_DOMAIN}}"
+  SUBDOMAIN="${QNAME:0:${#QNAME}-${#MYIP_DOMAIN}}"
   SUBDOMAIN="${SUBDOMAIN%.}"
 }
 
@@ -100,7 +100,7 @@ subdomain_is_base36() {
 }
 
 resolve_ns_subdomain() {
-  local index="${SUBDOMAIN:3}"
+  local index="${SUBDOMAIN:2}"
   echo "${MYIP_NS_ADDRESSES[$index-1]}"
 }
 
