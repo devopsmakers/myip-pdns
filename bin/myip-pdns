@@ -100,7 +100,7 @@ subdomain_is_base36() {
 }
 
 resolve_ns_subdomain() {
-  local index="${SUBDOMAIN:2}"
+  local index="${SUBDOMAIN:3}"
   echo "${MYIP_NS_ADDRESSES[$index-1]}"
 }
 
