@@ -18,10 +18,11 @@ played with PowerDNS.
 2. Detect when an ISP or suspicious person is transparently routing all my interesting
 DNS requests to their own DNS servers as I travel the world.
 
-Basically, I can run ./bin/amijackt and I'll have a good estimation of whether I'm
-talking to my DNS servers directly (the request came from me via my default gateway)
-or my request is coming via a transparent third party DNS server which could
-serve me alternate IP addresses or redirect me to phishing pages.
+## TL; DR
+Run `./bin/amijackt` and you'll have a good estimation of whether you're
+talking to specific DNS servers directly (the request came from me via your default gateway)
+or your request is going via a transparent third party DNS server which could
+serve alternate IP addresses, log unnecessarily or help serve you phishing sites / scripts.
 
 ## Get my IP with DNS
 ```
