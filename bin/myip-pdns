@@ -75,11 +75,11 @@ qtype_is() {
 }
 
 qname_matches_domain() {
-  [[ "$QNAME" =~ $MYIP_DOMAIN_PATTERN ]]
+  [[ "${QNAME,,}" =~ $MYIP_DOMAIN_PATTERN ]]
 }
 
 qname_is_root_domain() {
-  [ "$QNAME" = "$MYIP_DOMAIN" ]
+  [ "${QNAME,,}" = "$MYIP_DOMAIN" ]
 }
 
 extract_subdomain_from_qname() {
