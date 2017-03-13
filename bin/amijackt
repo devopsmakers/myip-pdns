@@ -8,7 +8,7 @@ DNS_IP=$(dig myip.exposed @myip.exposed TXT +short | tr -d '"')
 # Query through Google
 GOOGLE_DNS=$(dig myip.exposed @8.8.8.8 TXT +short | tr -d '"')
 
-HTTP_IP=$(curl -s http://myip.exposed/)
+HTTP_IP=$(curl -s https://myip.exposed/)
 
 if [[ "$DNS_IP" == "$HTTP_IP" ]]; then
     echo "OK - DNS and HTTP look OK. Better use your VPN just to be sure."
