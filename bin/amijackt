@@ -10,20 +10,17 @@ GOOGLE_DNS=$(dig myip.exposed @8.8.8.8 TXT +short | tr -d '"')
 
 HTTP_IP=$(curl -s http://myip.exposed/)
 
-echo "IP from DNS  lookup: $DNS_IP"
-echo "IP from HTTP lookup: $HTTP_IP"
-
 if [[ "$DNS_IP" == "$HTTP_IP" ]]; then
-    echo "DNS and HTTP traffic looks OK"
+    echo "OK - DNS and HTTP look OK. Better use your VPN just to be sure."
     exit 0
 else
     # If your DNS comes from the same address when requested from Google DNS
     # your DNS traffic is being hijacked by someone.
-    
+
     if [[ "$DNS_IP" == "$GOOGLE_DNS" ]]; then
-        echo "Your DNS traffic is being hijacked. Use your VPN."
+        echo "CRITICAL - DNS traffic is being hijacked. Use your VPN."
     else
-        echo "Something is suspicious (HTTP Proxy?). Better use your VPN."
+        echo "CRITICAL - Something is suspicious (HTTP Proxy?). Better use your VPN."
     fi
-    exit 1
+    exit 2
 fi
