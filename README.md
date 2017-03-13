@@ -102,6 +102,27 @@ If everything looks good:
 ./bin/amijackt
 OK - DNS and HTTP look OK. Better use your VPN just to be sure.
 ```
+## PowerDNS configuration
+
+Not going into too much detail... install powerdns and the pipe backend. These are in EPEL on Centos. 
+In your powerdns config:
+```
+...
+cache-ttl=0
+query-cache-ttl=0
+launch=pipe
+pipe-command=/opt/myip-pdns/bin/myip-pdns /opt/myip-pdns/etc/myip-pdns.conf
+...
+```
+Cachiong must be off otherwise users get served cached responses (someone else's IP). Bonus, you have your very own service like xip.io.
+
+### What's My IP HTTP service
+Simply use NGINX or **OpenResty**, ensure the ngx_http_realip_module is installed and add a location to return the IP. Example: 
+```
+        location / {
+            return 200 "$realip_remote_addr\n";
+        }
+```
 
 ## That's all!
 I really wish that ISP's, hotels and governments would stop screwing with our traffic.
