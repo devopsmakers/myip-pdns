@@ -11,7 +11,7 @@ of a TCP connection followed by all that HTTP talk.
 Okay, okay... While that may seem a legitimate reason to do this the _real_ reason
 I decided to do this is to:
 
-1. Get a _very_ simple intro to PowerDNS as a dynamic, authoritative name server
+1. Get a _very_ simple intro to PowerDNS as a dynamic, authoritative name server.
 I'm familiar with, and run a few NSD authoritative name servers but I've never really
 played with PowerDNS.
 
@@ -20,7 +20,7 @@ DNS requests to their own DNS servers as I travel the world.
 
 ## TL; DR
 Run `./bin/amijackt` and you'll have a good estimation of whether you're
-talking to specific DNS servers directly (the request came from me via your default gateway)
+talking to specific DNS servers directly (the request came via your default gateway)
 or your request is going via a transparent third party DNS server which could
 serve alternate IP addresses, log unnecessarily or help serve you phishing sites / scripts.
 
@@ -45,7 +45,7 @@ myip.exposed.		300	IN	TXT	"202.7.172.86"
 ;; WHEN: Mon Mar 13 19:48:54 2017
 ;; MSG SIZE  rcvd: 55
 ```
-Or for *just* your IP: 
+Or for **just** your IP: 
 ```
 $ dig myip.exposed @myip.exposed TXT +short
 "202.7.172.86"
@@ -59,7 +59,7 @@ $ curl -s https://myip.exposed
 
 ## Are my DNS requests being hijacked?
 
-Well, when we queried the DNS server the IP the request came from was apparently `202.7.172.86` and
+Well, when we queried the DNS server, the IP that the request came from was apparently `202.7.172.86` and
 when we queried the HTTPS endpoint the _real_ IP the request came from was apparently `14.202.188.197`.
 
 Something weird is going on:
@@ -89,7 +89,8 @@ myip.exposed.		300	IN	TXT	"202.7.165.68"
 ;; WHEN: Mon Mar 13 19:58:45 2017
 ;; MSG SIZE  rcvd: 55
 ```
-If all our DNS traffic is being fed to an ISP / third party DNS server the values vill be the same. These are infact the IP addresses of the recursive DNS servers our requests are being passed on to.
+If all our DNS traffic is being fed to an ISP / third party DNS server the values vill be the same.
+These are infact the IP addresses of the recursive DNS servers our requests are being passed on to.
 
 ## Quickly see if ./amijackt
 To make it easier for me to work out whether or not my DNS was being screwed with I wrote a check script:
@@ -104,7 +105,7 @@ OK - DNS and HTTP look OK. Better use your VPN just to be sure.
 ```
 ## PowerDNS configuration
 
-Not going into too much detail... install powerdns and the pipe backend. These are in EPEL on Centos. 
+Not going into too much detail... install powerdns and the pipe backend. These are in the EPEL repo on Centos. 
 In your powerdns config:
 ```
 ...
@@ -114,7 +115,7 @@ launch=pipe
 pipe-command=/opt/myip-pdns/bin/myip-pdns /opt/myip-pdns/etc/myip-pdns.conf
 ...
 ```
-Cachiong must be off otherwise users get served cached responses (someone else's IP). Bonus, you have your very own service like xip.io.
+Caching **must** be off otherwise users will get served cached responses (someone else's IP). Bonus, you have your very own service like xip.io.
 
 ### What's My IP HTTP service
 Simply use NGINX or **OpenResty**, ensure the ngx_http_realip_module is installed and add a location to return the IP. Example: 
@@ -126,5 +127,6 @@ Simply use NGINX or **OpenResty**, ensure the ngx_http_realip_module is installe
 
 ## That's all!
 I really wish that ISP's, hotels and governments would stop screwing with our traffic.
+
 DNS especially, is critical for application performance. If you screw with it you're
 potentially making an already crappy experience even worse.
